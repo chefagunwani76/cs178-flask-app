@@ -22,3 +22,8 @@ def execute_query(query, args=()):
     rows = cur.fetchall()
     cur.close()
     return rows
+
+rows = execute_query("SELECT * FROM countries")
+for row in rows:
+    print(row["id"], row["name"])
+
