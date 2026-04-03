@@ -25,5 +25,5 @@ def execute_query(query, args=()):
 
 rows = execute_query("SELECT * FROM countries")
 for row in rows:
-    print(row["id"], row["name"])
+    print(row["name"])
 
