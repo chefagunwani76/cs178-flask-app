@@ -1,4 +1,4 @@
-# author: T. Urness and M. Moore
+# author: Chidera Agu
 # description: Flask example using redirect, url_for, and flash
 # credit: the template html files were constructed with the help of ChatGPT
 
