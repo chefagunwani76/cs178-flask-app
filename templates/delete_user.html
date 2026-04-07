@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Delete User</title>
+  </head>
+  <body>
+    <h1>Delete User</h1>
+    <form action="{{ url_for('delete_user') }}" method="post">
+      <label for="name">Name:</label><br />
+      <input type="text" id="name" name="name" required /><br />
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>

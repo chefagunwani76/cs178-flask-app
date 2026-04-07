@@ -1,8 +1,8 @@
 # [Your Project Name Here]
 
 **CS178: Cloud and Database Systems — Project #1**
-**Author:** [Your Name]
-**GitHub:** [your-username]
+**Author:** [Chidera Agu]
+**GitHub:** [chefagunwani76]
 
 ---
 
