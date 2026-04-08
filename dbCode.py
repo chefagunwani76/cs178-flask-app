@@ -23,7 +23,9 @@ def execute_query(query, args=()):
     cur.close()
     return rows
 
-rows = execute_query("SELECT * FROM countries")
+rows = execute_query("SELECT * FROM country")
 for row in rows:
     print(row["name"])
+
+#has city, country, countrylanguage
 
