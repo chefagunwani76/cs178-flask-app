@@ -115,7 +115,7 @@ def login():
             if user:
                 session['username'] = name
                 flash("Login successful!", "success")
-                return redirect(url_for('country_query'))
+                return redirect(url_for('user_stats'))
             else:
                 flash("User not found!", "warning")
                 return redirect(url_for('login'))

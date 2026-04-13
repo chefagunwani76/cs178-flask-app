@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile</title>
+
+    <!-- Bootstrap styling -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+
+<div class="container mt-5">
+    <h2>My Profile</h2>
+    <p class="text-muted">Your saved user information</p>
+    <div class="card mt-4">
+        <div class="card-body">
+            <h4 class="card-title">{{ user.Name }}</h4>
+            <p class="card-text">
+                <strong>Last Name:</strong> {{ user.LastName }}
+            </p>
+            <p class="card-text">
+                <strong>Favorite City:</strong> {{ user.City }}
+            </p>
+
+        </div>
+    </div>
+    <br>
+    <a href="{{ url_for('country_query') }}" class="btn btn-success">Go to Country Query</a>
+    <a href="{{ url_for('home') }}" class="btn btn-primary">Back to Home</a>
+
+</div>
+
+</body>
+</html>
