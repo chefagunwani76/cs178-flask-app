@@ -64,6 +64,39 @@ def delete_user():
     # Render the form page if the request method is GET
     return render_template('delete_user.html')
 
+@app.route('/update-user', methods=['GET', 'POST'])
+def update_user():
+
+    if request.method == 'POST':
+        name = request.form.get('name')         
+        last_name = request.form.get('last_name')
+        city = request.form.get('city')
+
+        if name:
+            try:
+                table.update_item(
+                    Key={
+                        "Name": name
+                    },
+                    UpdateExpression="SET LastName = :ln, City = :c", 
+                    ExpressionAttributeValues={
+                        ":ln": last_name,
+                        ":c": city
+                    }
+                )
+
+                flash("User updated successfully!", "success")
+
+            except Exception as e:
+                print("Update error:", e)
+                flash("Error updating user.", "danger")
+        else:
+            flash("Name is required.", "warning")
+
+        return redirect(url_for('home'))
+
+    return render_template('update_user.html')
+
 @app.route('/display-users')
 def display_users():
     response = table.scan()

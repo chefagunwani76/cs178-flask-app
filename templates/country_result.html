@@ -4,9 +4,7 @@
     <title>Country Result</title>
 </head>
 <body>
-
     <h2>Results for {{ country }}</h2>
-
     <table border="1">
         <tr>
             <th>Country</th>
@@ -22,7 +20,6 @@
         </tr>
         {% endfor %}
     </table>
-
     <br>
     <a href="{{ url_for('query_page') }}">Back</a>
 
