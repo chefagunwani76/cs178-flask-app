@@ -146,6 +146,9 @@ def country_query():
     if request.method == 'GET':
         return render_template('query.html')
     try:
+        if request.method == 'GET':
+            countries = execute_query("SELECT Name FROM country")
+            return render_template('query.html', countries=countries)
         country = request.form.get('country')
 
         if not country:
@@ -170,18 +173,6 @@ def country_query():
         print("Country query error:", e)
         flash("Database error. Please try again.", "warning")
         return redirect(url_for('country_query'))
-
-@app.route('/all-countries')
-def all_countries():
-
-    query = """
-        SELECT Name, Capital, Region
-        FROM country
-    """
-
-    data = execute_query(query)
-
-    return render_template('all_countries.html', data=data)
 
 # these two lines of code should always be the last in the file
 if __name__ == '__main__':
