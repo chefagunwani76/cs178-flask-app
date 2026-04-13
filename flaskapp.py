@@ -155,7 +155,7 @@ def country_query():
         query = """
             SELECT Name, Capital, Region
             FROM country
-            WHERE countries.name = %s
+            WHERE Name = %s
         """
 
         data = execute_query(query, (country,))
