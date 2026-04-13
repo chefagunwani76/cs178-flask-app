@@ -137,24 +137,40 @@ def user_stats():
 
     return render_template('user_stats.html', user=user)
 
-@app.route('/country-query', methods=['POST'])
+@app.route('/country-query', methods=['GET','POST'])
 def country_query():
     if 'username' not in session:
         flash("Please log in first", "warning")
         return redirect(url_for('login'))
-    country = request.form.get('country')
-    
 
-    query = """
-        SELECT countries.name, countries.capital, regions.region_name
-        FROM countries
-        JOIN regions ON countries.region_id = regions.id
-        WHERE countries.name = %s
-    """
+    if request.method == 'GET':
+        return render_template('query.html')
+    try:
+        country = request.form.get('country')
 
-    data = execute_query(query, (country,))
+        if not country:
+            flash("Please enter a country.", "warning")
+            return redirect(url_for('country_query'))
 
-    return render_template('country_result.html', data=data, country=country)
+        query = """
+            SELECT countries.name, countries.capital, regions.region_name
+            FROM countries
+            JOIN regions ON countries.region_id = regions.id
+            WHERE countries.name = %s
+        """
+
+        data = execute_query(query, (country,))
+
+        if not data:
+            flash("No results found for that country.", "warning")
+            return redirect(url_for('country_query'))
+
+        return render_template('country_result.html', data=data, country=country)
+
+    except Exception as e:
+        print("Country query error:", e)
+        flash("Database error. Please try again.", "danger")
+        return redirect(url_for('country_query'))
 
 @app.route('/all-countries')
 def all_countries():
