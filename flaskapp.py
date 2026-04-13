@@ -5,11 +5,16 @@
 from flask import Flask
 from flask import render_template
 from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import session
+import boto3
 from dbCode import *
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key' # this is an artifact for using flash displays; 
                                    # it is required, but you can leave this alone
+
+dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+table = dynamodb.Table('Users')
 
 @app.route('/')
 def home():
@@ -20,44 +25,99 @@ def add_user():
     if request.method == 'POST':
         # Extract form data
         name = request.form['name']
-        genre = request.form['genre']
+        city = request.form['city']
         
-        # Process the data (e.g., add it to a database)
-        # For now, let's just print it to the console
-        print("Name:", name, ":", "Favorite genre:", genre)
-        
-        flash('User added successfully! Huzzah!', 'success')  # 'success' is a category; makes a green banner at the top
+        if name and city:
+            table.put_item(
+                Item={
+                    "Name": name,
+                    "City": city
+                }
+            )
+
+            flash('User added successfully! Huzzah!', 'success')
+        else:
+            flash('Please fill in all fields.', 'warning')
         # Redirect to home page or another page upon successful submission
         return redirect(url_for('home'))
-    else:
-        # Render the form page if the request method is GET
-        return render_template('add_user.html')
+    # Render the form page if the request method is GET
+    return render_template('add_user.html')
 
 @app.route('/delete-user',methods=['GET', 'POST'])
 def delete_user():
     if request.method == 'POST':
         # Extract form data
         name = request.form['name']
-        
-        # Process the data (e.g., add it to a database)
-        # For now, let's just print it to the console
-        print("Name to delete:", name)
-        
-        flash('User deleted successfully! Hoorah!', 'warning') 
+        if name:
+            table.delete_item(
+                Key={
+                    "Name": name
+                }
+            )
+            flash('User deleted successfully! Hoorah!', 'success')
+        else:
+            flash('Please enter a name.', 'warning')
         # Redirect to home page or another page upon successful submission
         return redirect(url_for('home'))
-    else:
-        # Render the form page if the request method is GET
-        return render_template('delete_user.html')
-
+    # Render the form page if the request method is GET
+    return render_template('delete_user.html')
 
 @app.route('/display-users')
 def display_users():
-    # hard code a value to the users_list;
-    # note that this could have been a result from an SQL query :) 
-    users_list = (('John','Doe','Comedy'),('Jane', 'Doe','Drama'))
-    return render_template('display_users.html', users = users_list)
+    response = table.scan()
+    users_list = response['Items']
+    return render_template('display_users.html', users=users_list)
 
+@app.route('/log-in-user', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        name = request.form['name']
+        session['username'] = name   # store in session
+        return redirect(url_for('home'))
+    return render_template('login.html')
+
+@app.route('/display-user-stats')
+def user_stats():
+    key = {"Name": session['username']}  # retrieve from session
+    response = table.get_item(Key=key)
+    user = response.get('Item')
+    if not user:
+        flash("User not found", "warning")
+        return redirect(url_for('login'))
+
+    return render_template('user_stats.html', user=user)
+
+@app.route('/country-query', methods=['POST'])
+def country_query():
+    if 'username' not in session:
+        flash("Please log in first", "warning")
+        return redirect(url_for('login'))
+    country = request.form.get('country')
+    
+
+    query = """
+        SELECT countries.name, countries.capital, regions.region_name
+        FROM countries
+        JOIN regions ON countries.region_id = regions.id
+        WHERE countries.name = %s
+    """
+
+    data = execute_query(query, (country,))
+
+    return render_template('country_result.html', data=data, country=country)
+
+@app.route('/all-countries')
+def all_countries():
+
+    query = """
+        SELECT countries.name, countries.capital, regions.region_name
+        FROM countries
+        JOIN regions ON countries.region_id = regions.id
+    """
+
+    data = execute_query(query)
+
+    return render_template('all_countries.html', data=data)
 
 # these two lines of code should always be the last in the file
 if __name__ == '__main__':

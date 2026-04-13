@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Country Query</title>
+</head>
+<body>
+
+    <h2>Which country would you like to query?</h2>
+
+    <!-- Country search form -->
+    <form action="{{ url_for('country_query') }}" method="POST">
+        <input type="text" name="country" placeholder="Enter country name">
+        <button type="submit">Search</button>
+    </form>
+
+    <br>
+
+    <!-- View all countries -->
+    <form action="{{ url_for('all_countries') }}" method="GET">
+        <button type="submit">View All Countries</button>
+    </form>
+
+</body>
+</html>

@@ -13,16 +13,15 @@
                 <tr>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Favorite Genre</th>
+                    <th>Favorite City</th>
                 </tr>
             </thead>
             <tbody> <!-- table body -- loop through all of the users -->
                 {% for user in users %}
-                <tr>
-                    <td>{{ user[0] }}</td>
-                    <td>{{ user[1] }}</td>
-                    <td>{{ user[2] }}</td>
-                </tr>
+                    <tr>
+                        <td>{{ user["Name"] }}</td>
+                        <td>{{ user["Country"] }}</td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>

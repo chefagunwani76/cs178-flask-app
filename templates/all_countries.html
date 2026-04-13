@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Countries</title>
+</head>
+<body>
+
+    <h2>All Countries</h2>
+
+    <table border="1">
+        <tr>
+            <th>Country</th>
+            <th>Capital</th>
+            <th>Region</th>
+        </tr>
+
+        {% for row in data %}
+        <tr>
+            <td>{{ row['name'] }}</td>
+            <td>{{ row['capital'] }}</td>
+            <td>{{ row['region_name'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="{{ url_for('query_page') }}">Back</a>
+
+</body>
+</html>
