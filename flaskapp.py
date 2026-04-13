@@ -153,9 +153,8 @@ def country_query():
             return redirect(url_for('country_query'))
 
         query = """
-            SELECT countries.name, countries.capital, regions.region_name
-            FROM countries
-            JOIN regions ON countries.region_id = regions.id
+            SELECT Name, Capital, Region
+            FROM country
             WHERE countries.name = %s
         """
 
@@ -169,7 +168,7 @@ def country_query():
 
     except Exception as e:
         print("Country query error:", e)
-        flash("Database error. Please try again.", "danger")
+        flash("Database error. Please try again.", "warning")
         return redirect(url_for('country_query'))
 
 @app.route('/all-countries')
