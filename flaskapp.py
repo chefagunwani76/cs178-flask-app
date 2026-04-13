@@ -189,7 +189,6 @@ def all_countries():
     
 @app.route('/country-result/<country>')
 def country_result(country):
-
     if 'username' not in session:
         flash("Please log in first", "warning")
         return redirect(url_for('login'))
@@ -200,7 +199,7 @@ def country_result(country):
             FROM country
             WHERE Name = %s
         """
-
+    #Tried to use ChatGPT to be consistent with country_language
         data = execute_query(query, (country,))
 
         if not data:
@@ -219,6 +218,7 @@ def country_result(country):
 @app.route('/country-language', methods=['POST'])
 def country_language():
     country = request.form.get('country')
+    #Tried to use ChatGPT to debug this to match with country_result and it changed the query
     query = """
         SELECT l.Language
         FROM country c

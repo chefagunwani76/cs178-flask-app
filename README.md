@@ -161,4 +161,4 @@ was also pretty difficult, I kept trying to use SQL functions on the dynamoDB I 
 ## AI Assistance
 
 <!-- List any AI tools you used (e.g., ChatGPT) and briefly describe what you used them for. Per course policy, AI use is allowed but must be cited in code comments and noted here. -->
-I used ChatGPT for the bootstraps and formatting of the login.html, user_stats.html, all_countries.html, country_result.html files so they would all match. 
+I used ChatGPT for the bootstraps and formatting of the login.html, user_stats.html, all_countries.html, country_result.html files so they would all match. I am not that familiar with html so I used the AI to debug the errors I made. Also note that I tried to use ChatGPT to debug my 'country_result' and 'country_language' methods in flaskapp.py because they were not working in tandem properly and it was close to due date but the AI did not help all that much as the query join still does not work(I do not think I gave it enough information to help is likely why)(To be more clear, I gave country_result to chatgpt to debug country language and it did not work but it changed the query).
