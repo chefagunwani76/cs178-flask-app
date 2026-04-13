@@ -142,25 +142,19 @@ def country_query():
     if 'username' not in session:
         flash("Please log in first", "warning")
         return redirect(url_for('login'))
-
-    if request.method == 'GET':
-        return render_template('query.html')
     try:
         if request.method == 'GET':
             countries = execute_query("SELECT Name FROM country")
             return render_template('query.html', countries=countries)
         country = request.form.get('country')
-
         if not country:
-            flash("Please enter a country.", "warning")
+            flash("Please select a country.", "warning")
             return redirect(url_for('country_query'))
-
         query = """
             SELECT Name, Capital, Region
             FROM country
             WHERE Name = %s
         """
-
         data = execute_query(query, (country,))
 
         if not data:
