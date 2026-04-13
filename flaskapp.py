@@ -222,7 +222,7 @@ def country_language():
     query = """
         SELECT l.Language
         FROM country c
-        JOIN countrylanguage l ON c.Code = l.CountryCode
+        JOIN countrylanguage l WHERE c.Code = l.CountryCode
         WHERE c.Name = %s
     """
     data = execute_query(query, (country,))

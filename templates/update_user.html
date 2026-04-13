@@ -8,16 +8,12 @@
 <h1>Update User</h1>
 
 <form action="{{ url_for('update_user') }}" method="post">
-
   <label>First Name (user you would like to update):</label><br>
   <input type="text" name="name" required><br><br>
-
   <label>New Last Name:</label><br>
   <input type="text" name="last_name" required><br><br>
-
   <label>New City:</label><br>
   <input type="text" name="city" required><br><br>
-
   <input type="submit" value="Update User">
 
 </form>

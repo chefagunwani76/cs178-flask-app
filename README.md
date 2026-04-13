@@ -9,7 +9,7 @@
 ## Overview
 
 <!-- Describe your project in 2-4 sentences. What does it do? Who is it for? What problem does it solve? -->
-This project runs queries over the world database
+This project runs queries over the world database to display the countries in the database and allow users to see information about specific countries. The app has a dynamoDB table that stores user information and utilizes a CRUD interface for the editing and reading of this table. The user signs in and can then have access to a world RDS database. 
 
 ---
 
@@ -33,10 +33,14 @@ ProjectOne/
 
 ├── templates/
 │   ├── home.html        # Landing page
+│   ├── login.html       #Page for user to login so they can have access to RDS database queries
 │   ├── add_user.html        # Page to add user to Users database 
 │   ├── delete_user.html     # Page to delete user from Users database
 │   ├── display_users.html   # Page to display all users from Users database
-│   ├── sql.html             # Add descriptions for your other templates
+│   ├── update.html          #Page to update user lastname and city
+│   ├── query.html           #Page to prompt user which country in database they would like to query
+│   ├── all_countres.html    #Page to display all country in database
+│   ├── country_result.html  #Page Shows information about the country the user chose from dropdown menu
 ├── .gitignore           # Excludes creds.py and other sensitive files
 └── README.md
 ```
@@ -118,8 +122,8 @@ db = "your-database-name"
 - `[city]` — stores information about a city's district and population; foreign key `[ID]`links to `[country]`;foreign key `[CountryCode]`links to `[countrylanguage]`
 - `[countrylanguage]` — stores information about a country's language including if it is official and the amount of people in the country that speaks it; foreign key `[countrycode]`links to `[city]`; foreign key `[Language]`links to `[country]`
 
-The JOIN query used in this project: <!-- describe it in plain English -->
-The JOIN query that was used was between city and countrylanguage to see how many people speak a language in a city. ANother join query was between a city and a country.
+The JOIN query used in this project: 
+The JOIN query that was used was between city and countrylanguage to see how many people speak a language in a city.
 
 ### DynamoDB
 
@@ -137,10 +141,10 @@ The JOIN query that was used was between city and countrylanguage to see how man
 
 | Operation | Route      | Description    |
 | --------- | ---------- | -------------- |
-| Create    | `/[route]` | [Adds a new user to the Users database] |
-| Read      | `/[route]` | [Displays all the users in the Users database] |
-| Update    | `/[route]` | [] |
-| Delete    | `/[route]` | [Removes a user from the Users database] |
+| Create    | `/add-user` | [Adds a new user to the Users database] |
+| Read      | `/display-users` | [Displays all the users in the Users database] |
+| Update    | `/update-user` | [Updates the users last name and city in the Users database] |
+| Delete    | `/delete-user` | [Removes a user from the Users database] |
 
 ---
 
@@ -157,4 +161,4 @@ was also pretty difficult, I kept trying to use SQL functions on the dynamoDB I 
 ## AI Assistance
 
 <!-- List any AI tools you used (e.g., ChatGPT) and briefly describe what you used them for. Per course policy, AI use is allowed but must be cited in code comments and noted here. -->
-I used ChatGPT for the login.html file, asked for how I would form an html file that would connect to a flask login route. 
+I used ChatGPT for the bootstraps and formatting of the login.html, user_stats.html, all_countries.html, country_result.html files so they would all match. 
