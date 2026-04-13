@@ -176,9 +176,8 @@ def country_query():
 def all_countries():
 
     query = """
-        SELECT countries.name, countries.capital, regions.region_name
-        FROM countries
-        JOIN regions ON countries.region_id = regions.id
+        SELECT Name, Capital, Region
+        FROM country
     """
 
     data = execute_query(query)
