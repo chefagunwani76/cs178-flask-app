@@ -161,7 +161,7 @@ def country_query():
             flash("No results found for that country.", "warning")
             return redirect(url_for('country_query'))
 
-        return render_template('country_result.html', data=data, country=country)
+        return render_template('country_result', data=data, country=country)
 
     except Exception as e:
         print("Country query error:", e)
@@ -186,6 +186,47 @@ def all_countries():
         print("All countries error:", e)
         flash("Could not load countries.", "warning")
         return redirect(url_for('country_query'))
+    
+@app.route('/country-result/<country>')
+def country_result(country):
+
+    if 'username' not in session:
+        flash("Please log in first", "warning")
+        return redirect(url_for('login'))
+
+    try:
+        query = """
+            SELECT Name, Population, Continent, Region, Capital, GovernmentForm
+            FROM country
+            WHERE Name = %s
+        """
+
+        data = execute_query(query, (country,))
+
+        if not data:
+            flash("Country not found.", "warning")
+            return redirect(url_for('country_query'))
+
+        return render_template('country_result.html',
+                               country=country,
+                               data=data[0])
+
+    except Exception as e:
+        print("Country result error:", e)
+        flash("Database error.", "danger")
+        return redirect(url_for('country_query'))
+    
+@app.route('/country-language', methods=['POST'])
+def country_language():
+    country = request.form.get('country')
+    query = """
+        SELECT l.Language
+        FROM country c
+        JOIN countrylanguage l ON c.Code = l.CountryCode
+        WHERE c.Name = %s
+    """
+    data = execute_query(query, (country,))
+    return render_template('language_result.html', data=data, country=country)
 
 # these two lines of code should always be the last in the file
 if __name__ == '__main__':

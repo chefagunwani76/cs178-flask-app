@@ -2,26 +2,42 @@
 <html>
 <head>
     <title>Country Result</title>
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h2>Results for {{ country }}</h2>
-    <table border="1">
-        <tr>
-            <th>Country</th>
-            <th>Capital</th>
-            <th>Region</th>
-        </tr>
+<div class="container mt-5">
+    <h2 class="mb-4">Country Dashboard: {{ country }}</h2>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4>{{ data.Name }}</h4>
+            <p><strong>Population:</strong> {{ data.Population }}</p>
+            <p><strong>Continent:</strong> {{ data.Continent }}</p>
+            <p><strong>Region:</strong> {{ data.Region }}</p>
+            <p><strong>Capital:</strong> {{ data.Capital }}</p>
+            <p><strong>Government Form:</strong> {{ data.GovernmentForm }}</p>
 
-        {% for row in data %}
-        <tr>
-            <td>{{ row['name'] }}</td>
-            <td>{{ row['capital'] }}</td>
-            <td>{{ row['region'] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+        </div>
+    </div>
+    <h4>More Information</h4>
+    <!-- BUTTONS SECTION -->
+    <form action="/country-language" method="POST" class="mb-2">
+        <input type="hidden" name="country" value="{{ country }}">
+        <button class="btn btn-primary">View Languages Spoken</button>
+    </form>
+    <form action="/country-capital" method="POST" class="mb-2">
+        <input type="hidden" name="country" value="{{ country }}">
+        <button class="btn btn-info">View Capital</button>
+    </form>
+    <form action="/country-government" method="POST" class="mb-2">
+        <input type="hidden" name="country" value="{{ country }}">
+        <button class="btn btn-secondary">View Government Form</button>
+    </form>
     <br>
-    <a href="{{ url_for('country_query') }}">Back</a>
-
+    <a href="{{ url_for('country_query') }}" class="btn btn-dark">
+        Back to Countries
+    </a>
+</div>
 </body>
 </html>
