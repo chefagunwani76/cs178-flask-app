@@ -71,9 +71,24 @@ def display_users():
 @app.route('/log-in-user', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        name = request.form['name']
-        session['username'] = name   # store in session
-        return redirect(url_for('home'))
+        try:
+            name = request.form['name']
+
+            response = table.get_item(Key={"Name": name})
+            user = response.get('Item')
+
+            if user:
+                session['username'] = name
+                flash("Login successful!", "success")
+                return redirect(url_for('home'))
+            else:
+                flash("User not found!", "warning")
+                return redirect(url_for('login'))
+
+        except Exception as e:
+            print("Login error:", e)
+            flash("Something went wrong. Try again.", "warning")
+            return redirect(url_for('login'))
     return render_template('login.html')
 
 @app.route('/display-user-stats')

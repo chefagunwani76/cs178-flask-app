@@ -157,3 +157,4 @@ was also pretty difficult, I kept trying to use SQL functions on the dynamoDB I 
 ## AI Assistance
 
 <!-- List any AI tools you used (e.g., ChatGPT) and briefly describe what you used them for. Per course policy, AI use is allowed but must be cited in code comments and noted here. -->
+I used ChatGPT for the login.html file, asked for how I would form an html file that would connect to a flask login route. 
