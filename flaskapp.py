@@ -173,6 +173,25 @@ def country_query():
         print("Country query error:", e)
         flash("Database error. Please try again.", "warning")
         return redirect(url_for('country_query'))
+    
+@app.route('/all-countries')
+def all_countries():
+    if 'username' not in session:
+        flash("Please log in first", "warning")
+        return redirect(url_for('login'))
+    try:
+        query = """
+            SELECT Name, Capital, Region
+            FROM country
+            ORDER BY Name
+        """
+        countries = execute_query(query)
+        return render_template('all_countries.html', countries=countries)
+
+    except Exception as e:
+        print("All countries error:", e)
+        flash("Could not load countries.", "warning")
+        return redirect(url_for('country_query'))
 
 # these two lines of code should always be the last in the file
 if __name__ == '__main__':
