@@ -25,12 +25,14 @@ def add_user():
     if request.method == 'POST':
         # Extract form data
         name = request.form['name']
+        last_name = request.form['last_name']
         city = request.form['city']
         
         if name and city:
             table.put_item(
                 Item={
                     "Name": name,
+                    "Last Name": last_name,
                     "City": city
                 }
             )
@@ -80,7 +82,7 @@ def login():
             if user:
                 session['username'] = name
                 flash("Login successful!", "success")
-                return redirect(url_for('home'))
+                return redirect(url_for('country_query'))
             else:
                 flash("User not found!", "warning")
                 return redirect(url_for('login'))
